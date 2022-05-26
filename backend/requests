@@ -1,0 +1,48 @@
+get http://localhost:8080/api/v1/recipe
+
+###
+
+get http://localhost:8080/api/v1/recipe/8dfd1de7-13f7-4d60-b84d-97185e1c59c3
+
+###
+
+delete http://localhost:8080/api/v1/recipe/8dfd1de7-13f7-4d60-b84d-97185e1c59c3
+
+###
+
+post http://localhost:8080/api/v1/recipe/ http/1.1
+content-type: application/json
+
+{
+  "name": "Test1",
+  "ingredients": [{
+    "name": "Salz",
+    "amount": 1,
+    "unit": "TL",
+    "ref": "2c92f15c-1f06-45cf-96bf-af6e31c57dc0"
+  }],
+  "steps": [{
+    "text": "Salzen",
+    "ingredientRefs": ["2c92f15c-1f06-45cf-96bf-af6e31c57dc0"]
+  }]
+}
+
+###
+
+put http://localhost:8080/api/v1/recipe/8dfd1de7-13f7-4d60-b84d-97185e1c59c3 http/1.1
+content-type: application/json
+
+{
+  "id": "8dfd1de7-13f7-4d60-b84d-97185e1c59c3",
+  "name": "Test2",
+  "ingredients": [{
+    "name": "Salz",
+    "amount": 1,
+    "unit": "TL",
+    "ref": "2c92f15c-1f06-45cf-96bf-af6e31c57dc0"
+  }],
+  "steps": [{
+    "text": "Salzen",
+    "ingredientRefs": ["2c92f15c-1f06-45cf-96bf-af6e31c57dc0"]
+  }]
+}
