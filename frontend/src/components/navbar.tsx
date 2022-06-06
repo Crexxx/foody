@@ -8,7 +8,12 @@ import { toggleDarkMode } from '../theme/themeSlice'
 import React from 'react'
 import { LocalPizza } from '@mui/icons-material'
 import Link from 'next/link'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
+import { Language } from '@mui/icons-material'
+import { useRouter } from 'next/router'
+import { MenuItem } from '@mui/material'
+import { Select } from '@mui/material'
+import { SelectChangeEvent } from '@mui/material'
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -55,12 +60,17 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 export default function NavBar() {
   const darkMode = useAppSelector(state => state.theme.darkMode)
   const dispatch = useAppDispatch()
-  const { t, ready } = useTranslation('common', { useSuspense: false })
+  const router = useRouter()
+  const { t } = useTranslation()
   const [state, setState] = React.useState({
     drawerOpen: false
   })
-
-  if (!ready) return <></>
+  const [language, setLanguage] = React.useState(router.locale ?? 'en')
+  const handleLanguageChange = (event: SelectChangeEvent) => {
+    const locale = event.target.value as string
+    setLanguage(locale)
+    router.push(router.route, router.route, { locale })
+  }
 
   const toggleDrawer = (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
     if (event && event.type === 'keydown' && ((event as React.KeyboardEvent).key === 'Tab' || (event as React.KeyboardEvent).key === 'Shift')) {
@@ -84,7 +94,7 @@ export default function NavBar() {
               <SearchIcon />
             </SearchIconWrapper>
             <StyledInputBase
-              placeholder={t('search', { ns: 'common' })}
+              placeholder={t('search')}
               inputProps={{ 'aria-label': 'search' }} />
           </Search>
         </Toolbar>
@@ -106,19 +116,27 @@ export default function NavBar() {
                   <ListItemIcon>
                     <LocalPizza />
                   </ListItemIcon>
-                  <ListItemText primary={t('recipes', { ns: 'common' })} />
+                  <ListItemText primary={t('recipes')} />
                 </ListItem>
               </ListItemButton>
             </Link>
             <Divider />
           </List>
           <List style={{ position: 'absolute', bottom: 0, left: 0, right: 0 }}>
+            <ListItem>
+              <ListItemIcon><Language /></ListItemIcon>
+              <ListItemText primary={t('language')} />
+              <Select id="language-select" value={language} onChange={handleLanguageChange}>
+                <MenuItem value={'en'}>{'en'}</MenuItem>
+                <MenuItem value={'de'}>{'de'}</MenuItem>
+              </Select>
+            </ListItem>
             <ListItemButton onClick={(_event) => dispatch(toggleDarkMode())}>
               <ListItem>
                 <ListItemIcon>
                   {darkMode ? <Brightness7Icon /> : <Brightness4Icon />}
                 </ListItemIcon>
-                <ListItemText primary={t('darkMode', { ns: 'common' })} />
+                <ListItemText primary={t('darkMode')} />
               </ListItem>
             </ListItemButton>
           </List>

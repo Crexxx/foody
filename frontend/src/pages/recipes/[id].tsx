@@ -3,8 +3,9 @@ import { Grid, Paper, Stack, Typography } from '@mui/material'
 import { Container } from '@mui/system'
 import { useRouter } from 'next/router'
 import { CSSProperties } from 'react'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 import { useGetRecipeByIdQuery } from '../../recipes/recipeApi'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
 export default function Recipe() {
   const router = useRouter()
@@ -15,7 +16,6 @@ export default function Recipe() {
 
   if (isLoading) return <p>Loading...</p>
   if (!recipe) return <p>Error</p>
-  //background: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0, 0.5), url(${recipe.imageUrl}))`, 
 
   const imageStyle: CSSProperties = {
     position: 'relative',
@@ -33,10 +33,10 @@ export default function Recipe() {
     textAlign: 'center'
   }
 
-  return <Container>
+  return <Container sx={{}}>
     <Stack direction="row" alignItems="center" gap={1} onClick={() => router.back()} sx={{ width: 'fit-content', marginTop: 2, marginBottom: 2, cursor: 'pointer' }}>
       <ArrowBack />
-      <Typography variant="body1">{t('back', { ns: 'common' })}</Typography>
+      <Typography variant="body1">{t('back')}</Typography>
     </Stack>
     <Paper>
       <Grid container>
@@ -48,4 +48,12 @@ export default function Recipe() {
       </Grid>
     </Paper>
   </Container>
+}
+
+export async function getServerSideProps({ locale }: { locale: string }) {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ['common']))
+    }
+  }
 }

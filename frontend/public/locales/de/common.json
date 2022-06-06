@@ -2,5 +2,8 @@
   "back": "Zurück",
   "search": "Suchen...",
   "darkMode": "Dunkelmodus",
-  "recipes": "Rezepte"
+  "recipes": "Rezepte",
+  "language": "Sprache",
+  "de": "Deutsch",
+  "en": "Englisch"
 }

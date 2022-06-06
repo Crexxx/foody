@@ -1,6 +1,7 @@
 import { Container, ImageList, ImageListItem, ImageListItemBar, Skeleton, useMediaQuery, useTheme } from '@mui/material'
 import Link from 'next/link'
 import { useGetRecipesQuery } from '../../recipes/recipeApi'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
 export default function Recipes() {
   const { data: recipes, error, isLoading } = useGetRecipesQuery()
@@ -38,4 +39,12 @@ export default function Recipes() {
       {items}
     </ImageList>
   </Container>
+}
+
+export async function getServerSideProps({ locale }: { locale: string }) {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ['common']))
+    }
+  }
 }
