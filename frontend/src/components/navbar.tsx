@@ -8,7 +8,7 @@ import { toggleDarkMode } from '../theme/themeSlice'
 import React from 'react'
 import { LocalPizza } from '@mui/icons-material'
 import Link from 'next/link'
-import { useTranslation } from 'next-i18next'
+import { useTranslation } from 'react-i18next'
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -55,10 +55,12 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 export default function NavBar() {
   const darkMode = useAppSelector(state => state.theme.darkMode)
   const dispatch = useAppDispatch()
-  const { t } = useTranslation()
+  const { t, ready } = useTranslation('common', { useSuspense: false })
   const [state, setState] = React.useState({
     drawerOpen: false
   })
+
+  if (!ready) return <></>
 
   const toggleDrawer = (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
     if (event && event.type === 'keydown' && ((event as React.KeyboardEvent).key === 'Tab' || (event as React.KeyboardEvent).key === 'Shift')) {
@@ -66,8 +68,6 @@ export default function NavBar() {
     }
     setState({ ...state, drawerOpen: !state.drawerOpen })
   }
-
-  const searchPlaceholder = t('search', { ns: 'common' })
 
   return (
     <>
@@ -84,7 +84,7 @@ export default function NavBar() {
               <SearchIcon />
             </SearchIconWrapper>
             <StyledInputBase
-              placeholder={searchPlaceholder}
+              placeholder={t('search', { ns: 'common' })}
               inputProps={{ 'aria-label': 'search' }} />
           </Search>
         </Toolbar>
@@ -106,7 +106,7 @@ export default function NavBar() {
                   <ListItemIcon>
                     <LocalPizza />
                   </ListItemIcon>
-                  <ListItemText primary={'Recipes'} />
+                  <ListItemText primary={t('recipes', { ns: 'common' })} />
                 </ListItem>
               </ListItemButton>
             </Link>
@@ -118,7 +118,7 @@ export default function NavBar() {
                 <ListItemIcon>
                   {darkMode ? <Brightness7Icon /> : <Brightness4Icon />}
                 </ListItemIcon>
-                <ListItemText primary={`Switch to ${darkMode ? 'light' : 'dark'} mode`} />
+                <ListItemText primary={t('darkMode', { ns: 'common' })} />
               </ListItem>
             </ListItemButton>
           </List>

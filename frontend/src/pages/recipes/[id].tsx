@@ -3,8 +3,7 @@ import { Grid, Paper, Stack, Typography } from '@mui/material'
 import { Container } from '@mui/system'
 import { useRouter } from 'next/router'
 import { CSSProperties } from 'react'
-import { useTranslation } from 'next-i18next'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import { useTranslation } from 'react-i18next'
 import { useGetRecipeByIdQuery } from '../../recipes/recipeApi'
 
 export default function Recipe() {
@@ -49,13 +48,4 @@ export default function Recipe() {
       </Grid>
     </Paper>
   </Container>
-}
-
-export const getServerSideProps = async ({ locale }: { locale: string }) => {
-  console.log(locale)
-  return {
-    props: {
-      ...await serverSideTranslations(locale, ['common'])
-    }
-  }
 }
