@@ -1,3 +1,4 @@
+import cors from 'cors'
 import * as dotenv from 'dotenv'
 import express, { Application } from 'express'
 import { Controller } from './controller'
@@ -16,6 +17,7 @@ export default class App {
 
   start(controllers: Controller[]) {
     this.app.use(express.json())
+    this.app.use(cors())
     this.app.use((req, _res, next) => {
       console.log(`[${new Date().toISOString()}]: ${req.method} ${req.path}`)
       next()

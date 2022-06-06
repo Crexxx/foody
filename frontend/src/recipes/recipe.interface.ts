@@ -1,4 +1,4 @@
-import { Ingredient, isIngredient, toExplicitIngredient } from '../../ingredients/ingredient.interface'
+import { Ingredient, isIngredient, toExplicitIngredient } from '../ingredients/ingredient.interface'
 
 export interface BaseRecipe {
   name: string
