@@ -1,4 +1,4 @@
-import { alpha, AppBar, Box, Divider, IconButton, InputBase, List, ListItem, ListItemButton, ListItemIcon, ListItemText, styled, SwipeableDrawer, Toolbar, Typography } from '@mui/material'
+import { alpha, AppBar, Box, Divider, IconButton, InputBase, List, ListItem, ListItemButton, ListItemIcon, ListItemText, MenuItem, Select, SelectChangeEvent, styled, SwipeableDrawer, Toolbar, Typography } from '@mui/material'
 import MenuIcon from '@mui/icons-material/Menu'
 import SearchIcon from '@mui/icons-material/Search'
 import { useAppDispatch, useAppSelector } from '../redux/hooks'
@@ -11,9 +11,6 @@ import Link from 'next/link'
 import { useTranslation } from 'next-i18next'
 import { Language } from '@mui/icons-material'
 import { useRouter } from 'next/router'
-import { MenuItem } from '@mui/material'
-import { Select } from '@mui/material'
-import { SelectChangeEvent } from '@mui/material'
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -57,6 +54,8 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }))
 
+const Offset = styled('div')(({ theme }: { theme: Theme }) => theme.mixins.toolbar)
+
 export default function NavBar() {
   const darkMode = useAppSelector(state => state.theme.darkMode)
   const dispatch = useAppDispatch()
@@ -69,7 +68,7 @@ export default function NavBar() {
   const handleLanguageChange = (event: SelectChangeEvent) => {
     const locale = event.target.value as string
     setLanguage(locale)
-    router.push(router.route, router.route, { locale })
+    router.push(router.asPath, router.asPath, { locale })
   }
 
   const toggleDrawer = (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
@@ -81,7 +80,7 @@ export default function NavBar() {
 
   return (
     <>
-      <AppBar position="static">
+      <AppBar position="fixed">
         <Toolbar>
           <IconButton size="large" edge="start" color="inherit" aria-label="open drawer" sx={{ mr: 2 }} onClick={toggleDrawer(true)}>
             <MenuIcon />
@@ -99,6 +98,7 @@ export default function NavBar() {
           </Search>
         </Toolbar>
       </AppBar>
+      <Offset />
       <SwipeableDrawer anchor='left' open={state.drawerOpen} onClose={toggleDrawer(false)} onOpen={toggleDrawer(true)}>
         <Box sx={{ width: 250, height: '100%' }} role="presentation" onClick={toggleDrawer(false)} onKeyDown={toggleDrawer(false)}>
           <List>
