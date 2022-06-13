@@ -1,8 +1,10 @@
 {
   "back": "Zurück",
   "search": "Suchen...",
+  "save": "Speichern",
   "darkMode": "Dunkelmodus",
   "recipes": "Rezepte",
+  "name": "Name",
   "language": "Sprache",
   "de": "Deutsch",
   "en": "Englisch"

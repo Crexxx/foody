@@ -1,5 +1,7 @@
 {
   "ingredients": "Zutaten",
   "step": "Schritt",
-  "step_other": "Schritte"
+  "step_other": "Schritte",
+  "edit_recipe": "Rezept bearbeiten",
+  "step_text": "Anweisung"
 }

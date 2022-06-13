@@ -1,13 +1,15 @@
-import { ArrowBack } from '@mui/icons-material'
-import { Container, Grid, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableRow, Typography } from '@mui/material'
+import { Container, Fab, Grid, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableRow, Typography } from '@mui/material'
 import { useRouter } from 'next/router'
 import { CSSProperties } from 'react'
 import { useTranslation } from 'next-i18next'
-import { useGetRecipeByIdQuery } from '../../recipes/recipeApi'
+import { useGetRecipeByIdQuery } from '../../../recipes/recipeApi'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import { RecipeIngredient, RecipeStep } from '../../recipes/recipe.interface'
-import Item from '../../components/item'
-import { capitalizeFirstLetter } from '../../utils/stringUtils'
+import { RecipeIngredient, RecipeStep } from '../../../recipes/recipe.interface'
+import Item from '../../../components/item'
+import { capitalizeFirstLetter } from '../../../utils/stringUtils'
+import BackBar from '../../../components/backbar'
+import { Edit } from '@mui/icons-material'
+import Link from 'next/link'
 
 export default function Recipe() {
   const router = useRouter()
@@ -38,24 +40,27 @@ export default function Recipe() {
     textAlign: 'center'
   }
 
+
   return <Container>
-    <Stack direction="row" alignItems="center" gap={1} onClick={() => router.back()} sx={{ width: 'fit-content', marginTop: 2, marginBottom: 2, cursor: 'pointer' }}>
-      <ArrowBack />
-      <Typography variant="body1">{t('back')}</Typography>
-    </Stack>
+    <BackBar />
     <Paper sx={{ borderRadius: 2 }}>
-      <Grid container sx={{ borderRadius: 2 }}>
+      <Grid container>
         <Grid item xs={12} style={imageStyle} sx={{ borderRadiusTop: 2 }}>
           <div style={imageTitleStyle}>
             <Typography variant="h2">{recipe.name}</Typography>
           </div>
+          <Link href={`/recipes/${id}/edit`}>
+            <Fab aria-label="edit" sx={{ position: 'absolute', bottom: -28, right: 16 }}>
+              <Edit />
+            </Fab>
+          </Link>
         </Grid>
         <Grid item xs={12} md={4} sx={{ padding: 2 }}>
           <Typography variant="h5">{t('ingredients', { ns: 'recipe' })}</Typography>
           <TableContainer sx={{ marginTop: 2, overflowX: 'hidden' }}>
-            <Table size="small" aria-label="ingredients table">
+            <Table size="small" aria-label="ingredients-table">
               <TableBody>
-                {recipe.ingredients.map((ing: RecipeIngredient) => (
+                {recipe.ingredients.map((ing) => (
                   <TableRow key={ing.name}>
                     <TableCell>{ing.amount > 0 ? ing.amount : ''}</TableCell>
                     <TableCell>{ing.unit}</TableCell>

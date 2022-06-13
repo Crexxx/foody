@@ -1,5 +1,7 @@
 {
   "ingredients": "Ingredients",
   "step": "step",
-  "step_other": "steps"
+  "step_other": "steps",
+  "edit_recipe": "Edit recipe",
+  "step_text": "Instruciton"
 }

@@ -21,10 +21,10 @@ export class RecipeController extends Controller {
   private async getAll(req: Request, resp: Response) {
     resp.status(200).send(await this.service.getAll())
   }
-  
-    private async create(req: Request, resp: Response) {
-      resp.status(201).send(await this.service.create(req.body))
-    }
+
+  private async create(req: Request, resp: Response) {
+    resp.status(201).send(await this.service.create(req.body))
+  }
 
   private async getById(req: Request, resp: Response) {
     resp.status(200).send(await this.service.getById(req.params.id))

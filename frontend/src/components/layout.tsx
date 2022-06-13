@@ -8,6 +8,6 @@ export default function Layout({ children, home }: { children: React.ReactNode, 
       <title>Foody</title>
     </Head>
     <header><NavBar /></header>
-    <main>{children}</main>
+    <main style={{ paddingBottom: '50px' }}>{children}</main>
   </>
 }
